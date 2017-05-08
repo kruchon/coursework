@@ -14,7 +14,7 @@ for i=1:length(peaksPairs)
         index,elementNum
     end
 end
-numCollisions
+numCollisions;
 percent = numCollisions / size(peaksPairs,1);
 end
 

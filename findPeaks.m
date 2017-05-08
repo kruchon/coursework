@@ -1,8 +1,8 @@
 function [ peaksT, peaksFkhz, peaksP ] = findPeaks( t, fkhz, p, sq_i_max, sq_j_max, peaksPerSec )
     peaks = ones(size(p,1),size(p,2));
     shifted_p = [];
-    for sq_i=-sq_i_max:sq_i_max
-        for sq_j=-sq_j_max:sq_j_max
+    for sq_i=-round(sq_i_max):round(sq_i_max)
+        for sq_j=-round(sq_j_max):round(sq_j_max)
             if (~(sq_i==0 && sq_j==0))
                 shifted_p = circshift(p,[sq_i,sq_j]);
                 peaks = peaks & ((p - shifted_p) > 0);

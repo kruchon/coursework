@@ -17,8 +17,8 @@ function [ resultHashTable ] = add2Table( hashTable, peaksPairs, songId, minDelt
             elementNum, index
         end
     end
-    numCollisions/size(peaksPairs,1)
-    numCollisions
+    numCollisions/size(peaksPairs,1);
+    numCollisions;
     resultHashTable = hashTable;
 end
 

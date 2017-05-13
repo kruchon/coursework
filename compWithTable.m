@@ -7,6 +7,7 @@ for i=1:length(peaksPairs)
     while(hashTable(index,elementNum*2-1)~=0)
         if (peaksPairs(i,4)==hashTable(index,elementNum*2-1))
             numCollisions(hashTable(index,elementNum*2)) = numCollisions(hashTable(index,elementNum*2)) + 1;
+            break;
         end
         elementNum = elementNum + 1;
     end

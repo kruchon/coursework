@@ -1,11 +1,9 @@
-function [ value ] = recognizeRecord ( startTime, maxDeltaT, sq_i, sq_j, peaksPerSec, newRate, deltaH )
+function [ value ] = recognizeRecord ( songsNum,hashTable,startTime, maxDeltaT, sq_i, sq_j, peaksPerSec, newRate, deltaH )
 
-names = GetFilesWithExtensions('./', {'wma'});
-
-[fileData,sampleRate] = audioread(names{1});
+[fileData,sampleRate] = audioread('Chack Berry - Johny Be Good.mp3');
 %disp('reading finished');
 
-[a,b]=rat(newRate/sampleRate,0.0001);
+[a,b]=rat(newRate/sampleRate,0.001);
 fileData = resample(fileData,a,b);
 
 meanChannels = mean(fileData,2);
@@ -19,7 +17,7 @@ pdb = 10*log10(p.*1);
 % axis tight;
 % xlabel('Time(seconds)');
 % ylabel('Frequences(kHz)');
-%disp('spectogram was builded');
+% disp('spectogram was builded');
 
 [ peaksT, peaksFkhz, peaksPdb ] = findPeaks(t,fkhz,pdb, sq_i, sq_j, peaksPerSec );
 % hold on;
@@ -32,10 +30,11 @@ peaksPairs = createPairs(peaksT, peaksFkhz, startTime, startTime+maxDeltaT, delt
 %     yLine = linspace(peaksPairs(i,2),peaksPairs(i,1));
 %     line(xLine,yLine);
 % end
-%disp('pairs were builded');
+disp('pairs were builded');
 
-hashTable = load('dataBase.dat');
-songsNum = load('songsNum.dat');
+% hashTable = load('dataBase.dat');
+% songsNum = load('songsNum.dat');
 x = compWithTable(peaksPairs,hashTable,songsNum,startTime);
-value = x(4)/(x(1)+x(2)+x(3)+x(5));
+x
+value = (x(1)+x(2)+x(4))/x(3);
 end

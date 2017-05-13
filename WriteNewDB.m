@@ -1,6 +1,6 @@
-function [ ] = WriteNewDB( startTime, maxDeltaT, sq_i, sq_j, peaksPerSec, newRate, deltaH )
+function [ hashTable ] = WriteNewDB( songsNum,hashTable,startTime, maxDeltaT, sq_i, sq_j, peaksPerSec, newRate, deltaH )
 
-hashTable = zeros(200000,50);
+hashTable = zeros(100000,50);
 names = GetFilesWithExtensions('./', {'mp3'});
 
 for songId=1:length(names)
@@ -14,16 +14,16 @@ for songId=1:length(names)
 %     figure;
 %     title(names{songId});
      fkhz = f./(1000*a/b);
-     pdb = 10*log10(p.*1);
+      pdb = 10*log10(p.*1);
 %     surf(t,fkhz,pdb,'edgecolor','none');
 %     axis tight;
 %     xlabel('Time(seconds)');
 %     ylabel('Frequences(kHz)');
-%     disp('finding peaks');
+    disp('finding peaks');
     [ peaksT, peaksFkhz, peaksPdb ] = findPeaks(t,fkhz,pdb, sq_i, sq_j, peaksPerSec);
 %     hold on;
 %     disp('building peaks');
-%     scatter3(peaksT,peaksFkhz,peaksPdb);    
+%     scatter2(peaksT,peaksFkhz,peaksPdb);    
 %     view(0,90);    
 %     disp('building pairs');
     peaksPairs = createPairs(peaksT, peaksFkhz, startTime, startTime+maxDeltaT, deltaH);
@@ -32,13 +32,13 @@ for songId=1:length(names)
 %         yLine = linspace(peaksPairs(i,2),peaksPairs(i,1));
 %         line(xLine,yLine);
 %     end
-%    disp('adding to hash table');
+   disp('adding to hash table');
     hashTable = add2Table(hashTable, peaksPairs, songId, startTime );
 end
 songsNum = songId;
-clear dataBase.dat
-clear songsNum.dat
-save('dataBase.dat','hashTable','-ascii');
-save('songsNum.dat','songsNum','-ascii');
+% clear dataBase.dat
+% clear songsNum.dat
+% save('dataBase.dat','hashTable','-ascii');
+% save('songsNum.dat','songsNum','-ascii');
 end
 
